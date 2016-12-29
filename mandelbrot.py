@@ -2,11 +2,11 @@ from pylab import *
 from numpy import *
 
 RESOLUTION_DPI = .01
-ITERATIONS = 200
-ZOOM = 1024
+ITERATIONS = 100
+ZOOM = 2
 
-CENTERX = 0.3
-CENTERY = 0.025
+CENTERX = -0.5
+CENTERY = 0
 WIDTH = 5
 HEIGH = 5
 
@@ -60,5 +60,5 @@ img = computeMandelbrot()
 print(time.time() - start)
 
 imshow(img)
-#show()
-savefig('mandelbrot_zoom%d_it%d.png' % (ZOOM,ITERATIONS))
+show()
+#savefig('mandelbrot_zoom%d_it%d.png' % (ZOOM,ITERATIONS))
