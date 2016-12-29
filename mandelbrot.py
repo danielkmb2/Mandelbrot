@@ -5,7 +5,7 @@ RESOLUTION_DPI = .01
 ITERATIONS = 100
 ZOOM = 2
 
-CENTERX = -0.5
+CENTERX = -1.4
 CENTERY = 0
 WIDTH = 5
 HEIGH = 5
@@ -27,20 +27,20 @@ def mandelbrot(a):
 
 	return ITERATIONS # esto podría ser NaN para ser mas exactos...
 
-def computeMandelbrot():
+def computeMandelbrot(res, z, w, h, cx, cy, its):
 
 	X = arange(
-		(-(WIDTH / 2) / ZOOM) + CENTERX, 
-		((WIDTH / 2) / ZOOM) + CENTERX, 
-		RESOLUTION_DPI / ZOOM)
+		(-(w / 2) / z) + cx, 
+		((w / 2) / z) + cx, 
+		res / z)
 	Y = arange(
-		(-(HEIGH / 2) / ZOOM) - CENTERY, 
-		((HEIGH / 2) / ZOOM) - CENTERY, 
-		RESOLUTION_DPI / ZOOM)
+		(-(h / 2) / z) - cy, 
+		((h / 2) / z) - cy, 
+		res / z)
 
 
 	Z = [0.+0.j] * (len(X) * len(Y))
-	IT = [ITERATIONS] * len(Z)
+	IT = [its] * len(Z)
 	i = 0
 	for x in range(0, len(X)):
 		for y in range(0, len(Y)):
@@ -55,10 +55,14 @@ def computeMandelbrot():
 
 import time
 
-start = time.time()
-img = computeMandelbrot()
-print(time.time() - start)
+ITERATIONS = 40
+for _,ZOOM in enumerate([1,2,4,8,16,32,64,128,256,512,1024]):
+	start = time.time()
+	img = computeMandelbrot(RESOLUTION_DPI, ZOOM, WIDTH, HEIGH, CENTERX, CENTERY, ITERATIONS)
+	imshow(img)
+	axis('off')
+	#show()
 
-imshow(img)
-show()
-#savefig('mandelbrot_zoom%d_it%d.png' % (ZOOM,ITERATIONS))
+	savefig('examples/mandelbrot_zoom%d_it%d.png' % (ZOOM,ITERATIONS))
+	print(time.time() - start)
+	ITERATIONS = ITERATIONS + 20
