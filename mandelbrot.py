@@ -40,27 +40,27 @@ def computeMandelbrot(dpi, scale, w, h, cx, cy, iterations):
 	return reshape(m_set_vector, (len(Y), len(X)))
 
 ITERATIONS = 50
-RESOLUTION_DPI = .005
+RESOLUTION_DPI = .01
 CENTERX = -1.4
 CENTERY = 0.0
-WIDTH = 6
-HEIGH = 6
+WIDTH = 5
+HEIGH = 5
+
+def generageZoomSecuence():
+	import time
+	for _,ZOOM in enumerate([1,2,4,8,16,32,64,128,256,512,1024]):
+		start = time.time()
+		img = computeMandelbrot(RESOLUTION_DPI, ZOOM, WIDTH, HEIGH, CENTERX, CENTERY, ITERATIONS)
+		imshow(img)
+		axis('off')
+		#show()
+		savefig('examples/mandelbrot_zoom%d_it%d.png' % (ZOOM,ITERATIONS))
+
+		print(time.time() - start)
+		ITERATIONS = ITERATIONS + 20
 
 
-import time
-for _,ZOOM in enumerate([1,2,4,8,16,32,64,128,256,512,1024]):
-	start = time.time()
-	img = computeMandelbrot(RESOLUTION_DPI, ZOOM, WIDTH, HEIGH, CENTERX, CENTERY, ITERATIONS)
-	imshow(img)
-	axis('off')
-	#show()
-	savefig('examples/mandelbrot_zoom%d_it%d.png' % (ZOOM,ITERATIONS))
-
-	print(time.time() - start)
-	ITERATIONS = ITERATIONS + 20
-
-
-#img = computeMandelbrot(RESOLUTION_DPI, 4, WIDTH, HEIGH, CENTERX, CENTERY, 100)
-#imshow(img)
-#axis('off')
-#show()
+img = computeMandelbrot(RESOLUTION_DPI, 1, WIDTH, HEIGH, CENTERX, CENTERY, 100)
+imshow(img)
+axis('off')
+show()
